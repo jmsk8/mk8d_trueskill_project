@@ -6,7 +6,7 @@
 #    By: jmiccio <jmiccio@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/10 14:11:03 by jmiccio           #+#    #+#              #
-#    Updated: 2025/01/27 23:09:38 by jmiccio          ###   ########.fr        #
+#    Updated: 2025/01/28 19:51:57 by jmiccio          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ CFILE		=	ft_split.c		\
 				ft_strlcpy.c \
 				ft_itoa.c \
 				ft_strndup.c \
+				ft_strncmp.c \
 				get_next_line/get_next_line.c		\
 				get_next_line/get_next_line_utils.c \
 				ft_printf/ft_print_func.c \

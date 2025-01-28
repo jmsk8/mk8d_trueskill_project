@@ -6,7 +6,7 @@
 /*   By: jmiccio <jmiccio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 02:12:39 by arthur            #+#    #+#             */
-/*   Updated: 2025/01/27 23:12:08 by jmiccio          ###   ########.fr       */
+/*   Updated: 2025/01/28 23:59:41 by jmiccio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@
 char	**ft_split(char *s, char c);
 int		ft_strcmp(char *str, char *cmp);
 char	*ft_itoa(long int n);
-char	*ft_strdup(const char *s1, size_t size, int is_stash);
 void	ft_strcat(char *dst, const char *src);
 int		ft_strlen(const char *s);
 char	*ft_strncpy(char *str, int nb);
 int		ft_charcpt(char *str, char chr);
 char	*ft_strjoin(char *stash, char *buf);
 size_t	ft_strlcpy(char *dest, const char *src, size_t size);
-char	*strndup(const char *s, size_t n);
+char	*ft_strdup(const char *s);
+char	*ft_strndup(const char *s, size_t n);
 
 /*ft_printf*/
 
@@ -45,6 +45,7 @@ int		ft_puthexa(unsigned int n, char format);
 int		ft_printaddress(void *address);
 int		ft_unsigned_putnbr(unsigned int n, int count);
 char	*ft_strchr(char const *str, int c);
+int		ft_strncmp(char const *s1, char const *s2, size_t n);
 
 /*get_next_line*/
 
@@ -57,5 +58,6 @@ char	*ft_copy_to_stash(char *stash, char *buf, size_t *size);
 void	*handle_error(char *stash, int *is_error, int rb, char *buf);
 void	*manage_exit(char **stash, int create_line, int *is_error, int n);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	*ft_strdup2(const char *s1, size_t size, int is_stash);
 
 #endif

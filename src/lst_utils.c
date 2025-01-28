@@ -24,6 +24,21 @@ t_player	*ft_player_lstnew(void)
 	return (t_newnode);
 }
 
+t_player	*ft_player_lstnew_stats(char *name, float mu, float sigma)
+{
+	t_player	*t_newnode;
+
+	t_newnode = malloc(sizeof(t_player));
+	if (!t_newnode)
+		return (NULL);
+	t_newnode->mu = mu;
+	t_newnode->sigma = sigma;
+	t_newnode->name = name;
+	t_newnode->next = NULL;
+	t_newnode->prev = NULL;
+	return (t_newnode);
+}
+
 int	ft_player_lstadd_back(t_player **lst, t_player *new)
 {
 	t_player	*tmp;

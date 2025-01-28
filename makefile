@@ -6,7 +6,7 @@
 #    By: jmiccio <jmiccio@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/10 17:16:04 by jmiccio           #+#    #+#              #
-#    Updated: 2025/01/27 22:53:52 by jmiccio          ###   ########.fr        #
+#    Updated: 2025/01/28 20:20:17 by jmiccio          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,20 +19,25 @@ C_FILES =	main.c \
 			utils.c \
 			read.c \
 			lst_utils.c \
-			player_struct.c
+			player_struct.c \
+			parsing.c \
+			exec.c \
+			signals.c
 
 SRC = $(addprefix $(SRC_DIR), $(C_FILES))
 OBJ = $(SRC:.c=.o)
 
 INCLUDE = -I includes
-LIBFT = libft/libft.a
-CFLAGS = -Wall -Werror -Wextra $(INCLUDE)
+LIBFT = libft/libft.a 
+CFLAGS = -Wall -Werror -Wextra $(INCLUDE) -L -lft -I/usr/include/readline
+
+LDFLAGS = -lreadline -lncurses
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
 	@make -C libft
-	$(CC) $(OBJ) $(LIBFT) -o $(NAME)
+	$(CC) $(OBJ) $(LIBFT) $(LDFLAGS) -o $(NAME)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@

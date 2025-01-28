@@ -6,13 +6,13 @@
 /*   By: jmiccio <jmiccio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 14:52:28 by jmiccio           #+#    #+#             */
-/*   Updated: 2024/09/26 15:45:46 by jmiccio          ###   ########.fr       */
+/*   Updated: 2025/01/29 00:00:26 by jmiccio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/libft.h"
 
-char	*ft_strdup(const char *s1, size_t size, int is_stash)
+char	*ft_strdup2(const char *s1, size_t size, int is_stash)
 {
 	char	*res;
 	size_t	i;
@@ -94,7 +94,7 @@ void	*manage_exit(char **stash, int create_line, int *is_error, int n)
 		}
 		return (NULL);
 	}
-	line = ft_strdup(*stash, 0, 0);
+	line = ft_strdup2(*stash, 0, 0);
 	free(*stash);
 	*stash = NULL;
 	return (line);

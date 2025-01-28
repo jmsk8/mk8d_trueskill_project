@@ -6,7 +6,7 @@
 /*   By: jmiccio <jmiccio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 14:44:53 by jmiccio           #+#    #+#             */
-/*   Updated: 2024/09/15 17:13:45 by jmiccio          ###   ########.fr       */
+/*   Updated: 2025/01/28 23:59:08 by jmiccio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ char	*ft_copy_to_stash(char *stash, char *buf, size_t *size)
 
 	tmp = NULL;
 	if (!stash)
-		return (ft_strdup(buf, *size, 1));
+		return (ft_strdup2(buf, *size, 1));
 	needed_size = ((ft_strlen(stash) + ft_strlen(buf)) + 1);
 	if ((needed_size * 2) >= *size)
 	{
 		while (*size <= (needed_size * 2))
 			*size *= 2;
-		tmp = ft_strdup(stash, *size, 1);
+		tmp = ft_strdup2(stash, *size, 1);
 		if (!tmp)
 			return (free(stash), NULL);
 		ft_strcat(tmp, buf);

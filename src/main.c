@@ -37,27 +37,37 @@ void save_to_file(t_player *players)
 	fclose(file);
 }
 
+void	prompt(t_data *data)
+{
+	while (1)
+	{
+		data->input = readline("mk8d_TrueSkill_Generator > ");
+		if (data->input == NULL)
+			return ;
+		if (line_is_empty(data->input))
+		{
+			free(data->input);
+			data->input = NULL;
+			continue ;
+		}
+		add_history(data->input);
+		if (!parsing(data))
+			continue ;
+		exec(data);
+		free_tmp_var(data);
+	}
+}
+
 int	main()
 {
 	t_data		data;
-	t_player	*player;
 
 	set_data(&data);
+	signals();
 	data.stats = read_stats(&data);
 	init_player_struct(&data);
-	for(int i = 0; data.stats[i]; i++)
-		printf("%s\n", data.stats[i]);
-	init_player_struct(&data);
-	player = data.players;
-	printf("\n%-20s%-20s%-20s\n", "Player Name", "Mu", "Sigma");
-	printf("--------------------------------------------\n");
-	while (player)
-	{
-		printf(BOLD_RED "%-20s" RESET, player->name);
-		printf(BOLD_BLUE "%-20.3f" RESET, player->mu);
-		printf(BOLD_GREEN "%-20.3f\n" RESET, player->sigma);
-		player = player->next;
-	}
+	prompt(&data);
 	save_to_file(data.players);
+	printf("exit..\n");
 	end(&data, 0);
 }

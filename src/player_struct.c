@@ -19,6 +19,8 @@ float	get_mu(t_data *data, char *stats)
 	char	*name = NULL;
 	float	res;
 
+	if (!stats)
+		return (-1);
 	while(stats[len] != ',')
 		len++;
 	if (!(name = strndup(stats, len)))

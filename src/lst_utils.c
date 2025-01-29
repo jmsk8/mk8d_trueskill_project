@@ -34,6 +34,7 @@ t_player	*ft_player_lstnew_stats(char *name, float mu, float sigma)
 	t_newnode->mu = mu;
 	t_newnode->sigma = sigma;
 	t_newnode->name = name;
+	t_newnode->pos = 0;
 	t_newnode->next = NULL;
 	t_newnode->prev = NULL;
 	return (t_newnode);

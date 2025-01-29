@@ -29,6 +29,8 @@ void	end(t_data *data, int exit_code)
 {
 	if (data->stats)
 		ft_free_array(data->stats);
+	if (data->resul_stats)
+		ft_free_array(data->resul_stats);
 	if (data->players)
 	{
 		ft_player_lstclear(&data->players);

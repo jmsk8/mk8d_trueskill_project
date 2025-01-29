@@ -41,19 +41,19 @@ void	help_cmd()
 char	*get_input(char *str)
 {
 	char	*input = NULL;
-	input = readline(str);
 	while (1)
 	{
-		if (input == NULL)
-		{
-			printf("abort..\n");
-			return (NULL);
-		}
+		input = readline(str);
 		if (line_is_empty(input))
 		{
 			free(input);
 			input = NULL;
-			continue;
+			continue ;
+		}
+		if (input == NULL)
+		{
+			printf("abort..\n");
+			return (NULL);
 		}
 		if (input)
 			break ;
@@ -233,17 +233,35 @@ t_player	*get_player(t_player *player, t_player *tour_player, char *str)
 	printf("player not found\n");
 	return (NULL);
 }
+
+char	*genere_prompt(int i)
+{
+	char *res;
+	int len;
+
+	len = snprintf(NULL, 0, "%d", i);
+	res = (char *)malloc(len + 4 + 1);
+	if (!res)
+		return NULL;
+
+	snprintf(res, len + 4 + 1, "%de: ", i);
+	return res;
+}
+
 void prepare_tournament(t_data *data)
 {
 	t_player	*player = NULL;
 	t_player	*tmp = NULL;
 	char		*input = NULL;
+	int			i = 1;
+	char		*prompt;
 
-	printf("who's playing?\n");
+
+	printf("put the Player in the right order. 1er 2e 3e...\n Enter EXIT when its done\n");
 	printf("--------------------------------------------\n");
 	while (1)
 	{
-		input = get_input("player name: ");
+		input = get_input("1er: ");
 		if (!input)
 			return ;
 		tmp = get_player(data->players, NULL, input);
@@ -251,10 +269,21 @@ void prepare_tournament(t_data *data)
 			break ;
 	}
 	player = ft_player_lstnew_stats(input, tmp->mu, tmp->sigma);
+	player->pos = i;
 	input = NULL;
 	while (1)
 	{
-		input = get_input("player name: ");
+		prompt = genere_prompt(i);
+		input = get_input(prompt);
+		if (!ft_strncmp("+", input, MAX_LENGTH))
+		{
+			i++;
+			free(input);
+			free(prompt);
+			input = NULL;
+			continue ;
+		}
+		free(prompt);
 		tmp = NULL;
 		if (!input)
 		{
@@ -281,15 +310,18 @@ void prepare_tournament(t_data *data)
 				free(input);
 				return ;
 			}
+			ft_player_lstlast(player)->pos = i;
 		}
 		input = NULL;
 	}
 	data->tournament_players = player;
-	printf("name %s\n", data->tournament_players->name);
+
 }
 
 void	exec_cmd(t_data *data, char **cmd)
 {
+	char	*input = NULL;
+
 	if (!ft_strncmp("show", cmd[0], MAX_LENGTH))
 	{
 		if (cmd[1] && !cmd[2] && !ft_strncmp("-stats", cmd[1], MAX_LENGTH))
@@ -304,7 +336,34 @@ void	exec_cmd(t_data *data, char **cmd)
 	else if (!ft_strncmp("start", cmd[0], MAX_LENGTH))
 	{
 		prepare_tournament(data);
+		if (!data->tournament_players)
+			return ;
 		display_players_stats(data->tournament_players);
+		while (1)
+		{
+			printf("confirm your choice and generate the result ?(y,n)\n");
+			input = get_input("> ");
+			if (!input || !ft_strncmp("n", input, MAX_LENGTH))
+			{
+				if (input)
+					free(input);
+				ft_player_lstclear(&data->tournament_players);
+				break ;
+			}
+				if (!ft_strncmp("y", input, MAX_LENGTH))
+				{
+					free(input);
+					printf("proceed..\n ");
+					trueskill_generator(data);
+					printf("new:\n");
+					display_players_stats(data->tournament_players);
+					break ;
+				}
+			else
+				printf("invalid argument\n");
+			free(input);
+		}
+
 	}
 	return ;
 }

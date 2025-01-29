@@ -7,5 +7,6 @@ void	set_data(t_data *data)
 	data->cmd = NULL;
 	data->input = NULL;
 	data->tournament_players = NULL;
+	data->resul_stats = NULL;
 	data->num_of_player = 0;
 }

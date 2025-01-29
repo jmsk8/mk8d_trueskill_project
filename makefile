@@ -6,7 +6,7 @@
 #    By: jmiccio <jmiccio@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/10 17:16:04 by jmiccio           #+#    #+#              #
-#    Updated: 2025/01/28 20:20:17 by jmiccio          ###   ########.fr        #
+#    Updated: 2025/01/29 18:55:03 by jmiccio          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ C_FILES =	main.c \
 			player_struct.c \
 			parsing.c \
 			exec.c \
-			signals.c
+			signals.c \
+			true_skill.c
 
 SRC = $(addprefix $(SRC_DIR), $(C_FILES))
 OBJ = $(SRC:.c=.o)

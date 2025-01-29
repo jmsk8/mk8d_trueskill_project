@@ -6,7 +6,7 @@
 /*   By: jmiccio <jmiccio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:37:35 by jmiccio           #+#    #+#             */
-/*   Updated: 2025/01/28 23:15:02 by jmiccio          ###   ########.fr       */
+/*   Updated: 2025/01/30 00:06:40 by jmiccio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <signal.h>
+# include <sys/wait.h>
 
 # define RESET        "\033[0m"
 # define BLUE         "\033[34m"
@@ -43,6 +44,7 @@ typedef struct t_player
 	char			*name;
 	double			mu;
 	double			sigma;
+	int				pos;
 	struct t_player	*next;
 	struct t_player	*prev;
 	
@@ -54,6 +56,7 @@ typedef struct t_data
 	t_player	*players;
 	t_player	*tournament_players;
 	char	**stats;
+	char	**resul_stats;
 	char	**cmd;
 	char	*input;
 	int		num_of_player;
@@ -77,5 +80,10 @@ void		free_tmp_var(t_data *data);
 void		signals(void);
 float		string_to_float(const char *str);
 t_player	*ft_player_lstnew_stats(char *name, float mu, float sigma);
+void		trueskill_generator(t_data *data);
+char		*get_stats_array(int fd, int *is_error);
+void		get_player_stats(t_data *data, char*stats, t_player *player);
+int			get_num_of_player(char **stats);
+void		display_players_stats(t_player *player);
 
 #endif

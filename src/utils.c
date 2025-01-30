@@ -1,5 +1,28 @@
 #include "../includes/mk8d_trueskill.h"
 
+char	*get_input(char *str)
+{
+	char	*input = NULL;
+	while (1)
+	{
+		input = readline(str);
+		if (input == NULL)
+		{
+			printf("abort..\n");
+			return (NULL);
+		}
+		else if (line_is_empty(input))
+		{
+			free(input);
+			input = NULL;
+			continue ;
+		}
+		if (input)
+			break ;
+	}
+	return (input);
+}
+
 void free_tmp_var(t_data *data)
 {
 	if (data->cmd)
@@ -7,11 +30,18 @@ void free_tmp_var(t_data *data)
 		ft_free_array(data->cmd);
 		data->cmd = NULL;
 	}
+	if (data->resul_stats)
+	{
+		ft_free_array(data->resul_stats);
+		data->resul_stats = NULL;
+	}
 	if (data->input)
 	{
 		free(data->input);
 		data->input = NULL;
 	}
+	if (data->tournament_players)
+		ft_player_lstclear(&data->tournament_players);
 }
 
 int	line_is_empty(char *str)

@@ -6,7 +6,7 @@
 /*   By: jmiccio <jmiccio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:37:35 by jmiccio           #+#    #+#             */
-/*   Updated: 2025/01/30 00:06:40 by jmiccio          ###   ########.fr       */
+/*   Updated: 2025/01/31 00:19:58 by jmiccio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 # define BOLD_BLUE     "\033[1;34m"
 # define BOLD_GREEN   "\033[1;32m"
 # define BOLD_RED     "\033[1;31m"
+# define BOLD_YELLOW "\033[1;33m" 
 
 #define MAX_LENGTH 4096
 
@@ -84,6 +85,19 @@ void		trueskill_generator(t_data *data);
 char		*get_stats_array(int fd, int *is_error);
 void		get_player_stats(t_data *data, char*stats, t_player *player);
 int			get_num_of_player(char **stats);
-void		display_players_stats(t_player *player);
+char		*get_input(char *str);
+t_player	*sort_players(t_player *player);
+char	**read_result(t_data *data);
+//static void	ensure_directory_exists(const char *dir);
+void	save_tmp_data(t_player *players);
+void	save_old_file(t_player *players);
+void	save_new_data(t_player *players);
+void	refresh_player_struct(t_player *player, t_player *player_tour);
+void	refresh_tournament_player_struct(t_data *data);
+void	prepare_tournament(t_data *data);
+void	display_competing_players(t_player *player);
+void	display_players_stats(t_player *player);
+void	display_player_stats(t_player *player, char *name);
+
 
 #endif

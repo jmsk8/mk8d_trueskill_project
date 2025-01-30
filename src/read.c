@@ -34,7 +34,7 @@ char	**read_stats(t_data *data)
 	map = NULL;
 	is_error = 0;
 
-	fd = open("data/curr_stats.log", O_RDONLY);
+	fd = open("data/data.log", O_RDONLY);
 	if (fd > 0 && BUFFER_SIZE > 0)
 	{
 		map = ft_split(get_stats_array(fd, &is_error), '\n');

@@ -74,3 +74,32 @@ void	ft_player_lstclear(t_player **lst)
 	}
 	*lst = NULL;
 }
+
+t_player *insert_sorted(t_player *head, t_player *new_player)
+{
+	double new_points = new_player->mu - (3 * new_player->sigma);
+	if (!head || (new_points > (head->mu - (3 * head->sigma))))
+	{
+		new_player->next = head;
+		return new_player;
+	}
+	t_player *current = head;
+	while (current->next && (new_points <= (current->next->mu - (3 * current->next->sigma))))
+		current = current->next;
+	new_player->next = current->next;
+	current->next = new_player;
+	return head;
+}
+
+t_player	*sort_players(t_player *player)
+{
+	t_player *sorted = NULL;
+	while (player)
+	{
+		t_player *next = player->next;
+		player->next = NULL;
+		sorted = insert_sorted(sorted, player);
+		player = next;
+	}
+	return sorted;
+}

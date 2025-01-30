@@ -1,66 +1,26 @@
 #include "../includes/mk8d_trueskill.h"
 
-char	**read_result(t_data *data)
+void	save_data(t_data *data)
 {
-	int		fd;
-	int		is_error;
-	char	**map;
-
-	map = NULL;
-	is_error = 0;
-
-	fd = open("data/tmp_data.log", O_RDONLY);
-	if (fd > 0 && BUFFER_SIZE > 0)
+	char	*input = NULL;
+	printf("save the result ?(y,n)\n");
+	input = get_input("> ");
+	if (!ft_strncmp("y", input, MAX_LENGTH))
 	{
-		map = ft_split(get_stats_array(fd, &is_error), '\n');
-		close(fd);
-		if (!map)
-			ft_error("Memory error\n", data, 1);
+		printf("\033[2J\033[H");
+		printf("saving...\n");
+		refresh_player_struct(data->players, data->tournament_players);
+		save_old_file(data->players);
+		save_new_data(data->players);
+		usleep(1000000);
+		printf("\033[2J\033[H");
 	}
-	else
-		ft_error("Error\nFailed to open file\n", data, 1);
-	return (map);
-}
-
-static void	ensure_directory_exists(const char *dir)
-{
-	struct stat st = {0};
-	if (stat(dir, &st) == -1)
-		mkdir(dir, 0777);
-}
-
-static void save_tmp_data(t_player *players)
-{
-	ensure_directory_exists("data");
-
-	FILE *file = fopen("data/tmp_data.log", "w");
-	if (!file)
+	else if (!ft_strncmp("n", input, MAX_LENGTH))
 	{
-		perror("Error opening tmp_data.log");
-		return;
-	}
-
-	t_player *player = players;
-	while (player)
-	{
-		fprintf(file, "%s = mu=%.3f, sigma=%.3f pos=%d\n", player->name, player->mu, player->sigma, player->pos);
-		player = player->next;
-	}
-
-	fclose(file);
-}
-
-void	refresh_tournament_player_struct(t_data *data)
-{
-	ft_player_lstclear(&data->tournament_players);
-	int num_of_player = get_num_of_player(data->resul_stats);
-	data->tournament_players = ft_player_lstnew();
-	get_player_stats(data, data->resul_stats[0], ft_player_lstlast(data->tournament_players));
-	for (int i = 1; i < num_of_player; i++)
-	{
-		if (!ft_player_lstadd_back(&data->tournament_players, ft_player_lstnew()))
-			ft_error("malloc error\n", data, 1);
-		get_player_stats(data, data->resul_stats[i], ft_player_lstlast(data->tournament_players));
+		printf("\033[2J\033[H");
+		printf("suppressing...\n");
+		usleep(1000000);
+		printf("\033[2J\033[H");
 	}
 }
 
@@ -89,6 +49,9 @@ void	trueskill_generator(t_data *data)
 	display_players_stats(data->tournament_players);
 	data->resul_stats = read_result(data);
 	refresh_tournament_player_struct(data);
+	printf("new:\n");
+	display_players_stats(data->tournament_players);
+	save_data(data);
 	remove("data/tmp_data.log");
 	return ;
 }

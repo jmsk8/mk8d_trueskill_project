@@ -6,7 +6,7 @@
 /*   By: jmiccio <jmiccio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:37:35 by jmiccio           #+#    #+#             */
-/*   Updated: 2025/01/31 00:19:58 by jmiccio          ###   ########.fr       */
+/*   Updated: 2025/01/31 18:24:39 by jmiccio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@
 # define BOLD_GREEN   "\033[1;32m"
 # define BOLD_RED     "\033[1;31m"
 # define BOLD_YELLOW "\033[1;33m" 
+# define BOLD_ORANGE "\033[1;38;5;214m"
+# define BOLD_GRAY "\033[1;37m"
+# define BOLD_BROWN "\033[1;38;5;94m"
 
 #define MAX_LENGTH 4096
 
@@ -96,7 +99,7 @@ void	refresh_player_struct(t_player *player, t_player *player_tour);
 void	refresh_tournament_player_struct(t_data *data);
 void	prepare_tournament(t_data *data);
 void	display_competing_players(t_player *player);
-void	display_players_stats(t_player *player);
+void	display_players_stats(t_player *player, int num_of_player);
 void	display_player_stats(t_player *player, char *name);
 
 

@@ -155,7 +155,7 @@ void	exec_cmd(t_data *data, char **cmd)
 	if (!ft_strncmp("show", cmd[0], MAX_LENGTH))
 	{
 		if (cmd[1] && !cmd[2] && !ft_strncmp("-stats", cmd[1], MAX_LENGTH))
-			display_players_stats(data->players);
+			display_players_stats(data->players, data->num_of_player);
 		else if (cmd[2])
 			display_player_stats(data->players, cmd[2]);
 	}
@@ -186,7 +186,7 @@ void	exec_cmd(t_data *data, char **cmd)
 					printf("proceed..\n ");
 					trueskill_generator(data);
 					printf("new:\n");
-					display_players_stats(data->tournament_players);
+					display_players_stats(data->tournament_players, data->num_of_player);
 					break ;
 				}
 			else

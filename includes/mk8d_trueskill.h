@@ -6,7 +6,7 @@
 /*   By: jmiccio <jmiccio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:37:35 by jmiccio           #+#    #+#             */
-/*   Updated: 2025/01/31 18:24:39 by jmiccio          ###   ########.fr       */
+/*   Updated: 2025/01/31 20:37:49 by jmiccio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,11 @@
 # define BOLD_ORANGE "\033[1;38;5;214m"
 # define BOLD_GRAY "\033[1;37m"
 # define BOLD_BROWN "\033[1;38;5;94m"
+
+# define RANK_S "\033[1;38;2;255;127;127m"  // **S Tier** (Rouge clair)
+# define RANK_A "\033[1;38;2;179;239;120m"  // **A Tier** (Vert clair)
+# define RANK_B "\033[1;38;2;119;236;236m"  // **B Tier** (Cyan clair)
+# define RANK_C "\033[1;38;2;177;118;237m"  // **C Tier** (Violet clair)
 
 #define MAX_LENGTH 4096
 

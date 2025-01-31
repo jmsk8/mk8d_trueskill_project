@@ -16,15 +16,15 @@ void	display_players_stats(t_player *player, int num_of_player)
 		printf(BOLD_BLUE "%-20.3f" RESET, player->mu);
 		printf(BOLD_GREEN "%-20.3f" RESET, player->sigma);
 		if (quartiles == 4)
-			printf(BOLD_YELLOW "%-20.3f\n" RESET, points);
+			printf(RANK_S "%-20.3f\n" RESET, points);
 		else if (quartiles == 3)
-			printf(BOLD_GRAY "%-20.3f\n" RESET, points);
+			printf(RANK_A "%-20.3f\n" RESET, points);
 		else if (quartiles == 2)
-			printf(BOLD_ORANGE "%-20.3f\n" RESET, points);
+			printf(RANK_B "%-20.3f\n" RESET, points);
 		else if (quartiles == 1)
-			printf(BOLD_BROWN "%-20.3f\n" RESET, points);
+			printf(RANK_C "%-20.3f\n" RESET, points);
 		else
-			printf(BOLD_BROWN "%-20.3f\n" RESET, points);
+			printf(RANK_C "%-20.3f\n" RESET, points);
 
 		player = player->next;
 		if (i >= (int)gap)

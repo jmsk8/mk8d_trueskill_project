@@ -47,7 +47,10 @@ int	ft_player_lstadd_back(t_player **lst, t_player *new)
 	if (!lst || !new)
 		return (0);
 	if (*lst == NULL)
+	{
 		*lst = new;
+		new->prev = NULL;
+	}
 	else
 	{
 		tmp = ft_player_lstlast(*(lst));
@@ -57,6 +60,7 @@ int	ft_player_lstadd_back(t_player **lst, t_player *new)
 	new->next = NULL;
 	return (1);
 }
+
 
 void	ft_player_lstclear(t_player **lst)
 {

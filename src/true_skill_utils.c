@@ -78,7 +78,7 @@ void save_old_file(t_player *players)
 void save_new_data(t_player *players)
 {
 	ensure_directory_exists("data");
-
+	players =  sort_players(players);
 	FILE *file = fopen("data/data.log", "w");
 	if (!file)
 	{
@@ -99,13 +99,20 @@ void save_new_data(t_player *players)
 void	refresh_player_struct(t_player *player, t_player *player_tour)
 {
 	t_player	*head = player;
+	t_player	*check = player_tour;
 
+	while (check)
+	{
+		printf("[check [%s]\n", check->name);
+		check = check->next;
+	}
+	
 	while (player_tour)
 	{
 		player = head;
 		while (player)
 		{
-			if (!ft_strncmp(player->name, player_tour->name, MAX_LENGTH))
+			if (!ft_strncmp(player->name, player_tour->name, ft_strlen(player_tour->name)))
 			{
 				player->mu = player_tour->mu;
 				player->sigma = player_tour->sigma;
@@ -115,14 +122,17 @@ void	refresh_player_struct(t_player *player, t_player *player_tour)
 		}
 		player_tour = player_tour->next;
 	}
-	return ;
 }
+
 
 void	refresh_tournament_player_struct(t_data *data)
 {
 	ft_player_lstclear(&data->tournament_players);
+	data->tournament_players = NULL;
 	int num_of_player = get_num_of_player(data->resul_stats);
 	data->tournament_players = ft_player_lstnew();
+	if (!data->tournament_players)
+		ft_error("malloc error\n", data, 1);
 	get_player_stats(data, data->resul_stats[0], ft_player_lstlast(data->tournament_players));
 	for (int i = 1; i < num_of_player; i++)
 	{

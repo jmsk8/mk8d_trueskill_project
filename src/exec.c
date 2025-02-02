@@ -1,14 +1,35 @@
 #include "../includes/mk8d_trueskill.h"
 
+void save_file(t_data *data)
+{
+	save_old_file(data->players);
+	save_new_data(data->players);
+}
+
 void	help_cmd()
 {
-	printf("\n%-20s%-20s\n", "commande", "argument");
-	printf("\n%-20s%-20s", "show", "-stats  pour voir un tableaux de tout les joueurs\n");
-	printf("\n%-40s", 	"                    -stats player  pour les stats d'un joueur en particulier\n");
+	printf("\n%-20s%-20s\n", "[commande]", "[argument]");
+	printf("\n%-20s%-20s", "[show]", "[-stats]  pour voir un tableau de tout les joueurs.\n");
+	printf("\n%-40s", 	"                    [-stats player]  pour voir les stats d'un joueur en particulier.\n");
+	printf("\n%-20s%-20s", "[add]", "[-player]  pour ajouter un joueur.\n");
+	printf("\n%-20s%-20s", "[delete]", "[playe_name] (ex [delete Tony]) pour supprimer un joueur.\n");
+	printf("\n%-20s%-20s", "[start]", "pour generer les resultats d'un tournoi.\n");
+	printf("\n%-20s%-20s", "[save]", "pour sauvegarder les modification données.\n");
+	printf("\n");
 }
 
 int	is_valid_cmd(char **cmd)
 {
+	if (!ft_strncmp("help", cmd[0], MAX_LENGTH))
+	{
+		if (cmd[1])
+		{
+			printf("too many arguments\n");
+			return (0);
+		}
+		else if (!cmd[1])
+			return (1);
+	}
 	if (!ft_strncmp("show", cmd[0], MAX_LENGTH))
 	{
 		if (!cmd[1])
@@ -18,11 +39,14 @@ int	is_valid_cmd(char **cmd)
 		}
 		else if (!ft_strncmp("-stats", cmd[1], MAX_LENGTH) && !cmd[2])
 			return (1);
-		else if (!ft_strncmp("-stats", cmd[1], MAX_LENGTH) && cmd[2] && !cmd[3])
-			return (1);
-		else
+		else if (ft_strncmp("-stats", cmd[1], MAX_LENGTH) && !cmd[2])
 		{
-			printf("too many arguments\n");
+			printf("show: invalid argument\n");
+			return (0);
+		}
+		else if (ft_strncmp("-stats", cmd[1], MAX_LENGTH) && cmd[2] && !cmd[3])
+		{
+			printf("too many arguments, [show -arg] needed\n");
 			return (0);
 		}
 	}
@@ -30,27 +54,32 @@ int	is_valid_cmd(char **cmd)
 	{
 		if (!cmd[1])
 		{
-			printf("argument needed. Exemple: [add player]\n");
+			printf("add: argument needed. Exemple: [add -player]\n");
 			return (0);
 		}
 		if (cmd[2] && cmd[3])
 		{
-			printf("too many argument. Exemple: [add player]\n");
+			printf("add: too many argument. Exemple: [add -player]\n");
 			return (0);
 		}
-		else
+		if (!ft_strncmp(cmd[2], "-player", MAX_LENGTH))
 			return (1);
+		else
+		{
+			printf("add: bad argument. Exemple: [add -player]\n");
+			return (0);
+		}
 	}
 	if (!ft_strncmp("delete", cmd[0], MAX_LENGTH))
 	{
 		if (!cmd[1])
 		{
-			printf("argument needed. Exemple: [delete player]\n");
+			printf("delete: argument needed. Exemple: [delete -player]\n");
 			return (0);
 		}
 		if (cmd[2] && cmd[3])
 		{
-			printf("too many argument. Exemple: [delete player]\n");
+			printf("delete: too many argument. Exemple: [delete -player]\n");
 			return (0);
 		}
 		else
@@ -60,7 +89,16 @@ int	is_valid_cmd(char **cmd)
 	{
 		if (cmd[1])
 		{
-			printf("too many arguments. exemple [start]\n");
+			printf("start: too many arguments. exemple [start]\n");
+			return (0);
+		}
+		return (1);
+	}
+	if (!ft_strncmp("save", cmd[0], MAX_LENGTH))
+	{
+		if (cmd[1])
+		{
+			printf("save: too many arguments. exemple [save]\n");
 			return (0);
 		}
 		return (1);
@@ -71,14 +109,23 @@ int	is_valid_cmd(char **cmd)
 
 void	add_player(t_data *data)
 {
-	char	*mu = NULL;
-	char	*sigma = NULL;
+	char		*mu = NULL;
+	char		*sigma = NULL;
+	t_player	*tmp = data->players;
 	t_player	*player = ft_player_lstnew();
+
 	if (!player)
 		ft_error("malloc error\n", data, 1);
 	player->name = get_input("name: ");
-	if (!player->name)
+	while (tmp)
 	{
+		if (!strncmp(tmp->name, player->name, MAX_LENGTH))
+			break ;
+		tmp = tmp->next;
+	}
+	if (tmp || !player->name)
+	{
+		printf("player already exist\n");
 		free(player);
 		return ;
 	}
@@ -110,7 +157,7 @@ void	delete_player(t_data *data, char *name)
 	t_player	*next_tmp = NULL;
 	t_player	*prev_tmp = NULL;
 
-	while (1)
+	while (player)
 	{
 		if (!strncmp(name, player->name, MAX_LENGTH))
 			break ;
@@ -146,23 +193,33 @@ void	delete_player(t_data *data, char *name)
 		}
 		return ;
 	}
+	else
+		printf("player not found\n");
 }
 
 void	exec_cmd(t_data *data, char **cmd)
 {
 	char	*input = NULL;
 
-	if (!ft_strncmp("show", cmd[0], MAX_LENGTH))
+	if (!ft_strncmp("help", cmd[0], MAX_LENGTH))
+		help_cmd();
+	else if (!ft_strncmp("show", cmd[0], MAX_LENGTH))
 	{
 		if (cmd[1] && !cmd[2] && !ft_strncmp("-stats", cmd[1], MAX_LENGTH))
 			display_players_stats(data->players, data->num_of_player);
-		else if (cmd[2])
+		else if (!ft_strncmp("-start", cmd[1], MAX_LENGTH) && cmd[2])
 			display_player_stats(data->players, cmd[2]);
 	}
 	else if (!ft_strncmp("add", cmd[0], MAX_LENGTH))
-		add_player(data);
+	{
+		if (!ft_strncmp("-player", cmd[0], MAX_LENGTH))
+			add_player(data);
+	}
 	else if (!ft_strncmp("delete", cmd[0], MAX_LENGTH))
-		delete_player(data, cmd[1]);
+	{
+		if (!ft_strncmp("-player", cmd[0], MAX_LENGTH))
+			delete_player(data, cmd[1]);
+	}
 	else if (!ft_strncmp("start", cmd[0], MAX_LENGTH))
 	{
 		prepare_tournament(data);
@@ -186,15 +243,16 @@ void	exec_cmd(t_data *data, char **cmd)
 					printf("proceed..\n ");
 					trueskill_generator(data);
 					printf("new:\n");
-					display_players_stats(data->tournament_players, data->num_of_player);
+					display_players_stats(data->players, data->num_of_player);
 					break ;
 				}
 			else
 				printf("invalid argument\n");
 			free(input);
 		}
-
 	}
+	else if (!ft_strncmp("save", cmd[0], MAX_LENGTH))
+		delete_player(data, cmd[1]);
 	return ;
 }
 

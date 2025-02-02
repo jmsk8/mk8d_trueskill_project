@@ -37,6 +37,21 @@ void	display_players_stats(t_player *player, int num_of_player)
 	}
 }
 
+void	display_competing_players_result(t_player *player)
+{
+	printf("\n%-20s%-20s%-20s%-20s\n", "Player Name", "Mu", "Sigma", "Points");
+	printf("--------------------------------------------------------------------------\n");
+	while (player)
+	{
+		double points = player->mu - (3 * player->sigma);
+		printf(BOLD_RED "%-20s" RESET, player->name);
+		printf(BOLD_BLUE "%-20.3f" RESET, player->mu);
+		printf(BOLD_GREEN "%-20.3f" RESET, player->sigma);
+		printf(BOLD_YELLOW "%-20.3f\n" RESET, points);
+		player = player->next;
+	}
+}
+
 void	display_competing_players(t_player *player)
 {
 	printf("\n%-20s%-20s%-20s%-20s\n", "Player Name", "Mu", "Sigma", "Position");

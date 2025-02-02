@@ -9,11 +9,11 @@ void	save_data(t_data *data)
 	{
 		printf("\033[2J\033[H");
 		printf("saving...\n");
-		refresh_player_struct(data->players, data->tournament_players);
 		save_old_file(data->players);
+		refresh_player_struct(data->players, data->tournament_players);
 		save_new_data(data->players);
 		usleep(1000000);
-		printf("\033[2J\033[H");
+		//printf("\033[2J\033[H");
 	}
 	else if (!ft_strncmp("n", input, MAX_LENGTH))
 	{
@@ -46,11 +46,11 @@ void	trueskill_generator(t_data *data)
 	usleep(1000000);
 	printf("\033[2J\033[H");
 	printf("old:\n");
-	display_players_stats(data->tournament_players, data->num_of_player);
+	display_competing_players_result(data->tournament_players);
 	data->resul_stats = read_result(data);
 	refresh_tournament_player_struct(data);
 	printf("new:\n");
-	display_players_stats(data->tournament_players, data->num_of_player);
+	display_competing_players_result(data->tournament_players);
 	save_data(data);
 	remove("data/tmp_data.log");
 	return ;

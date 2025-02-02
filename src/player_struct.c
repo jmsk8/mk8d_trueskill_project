@@ -59,14 +59,19 @@ char *get_name(t_data *data, char *stats)
 void get_player_stats(t_data *data, char*stats, t_player *player)
 {
 	player->name = get_name(data, stats);
-	player->mu = get_mu(data, &stats[ft_strlen(player->name) + 6]);
-	player->sigma = get_sigma(data, &stats[ft_strlen(player->name) + 20]);
+	stats += ft_strlen(player->name) + 6;
+	player->mu = get_mu(data, stats);
+	while (isdigit(*stats) || *stats == '.' || isspace(*stats))
+		stats++;
+	while (!isdigit(*stats))
+		stats++;
+	player->sigma = get_sigma(data, stats);
 }
 
 int	get_num_of_player(char **stats)
 {
 	int	num = 0;
-	while(stats[num])
+	while(stats[num] && ft_strlen(stats[num]) > 16)
 		num++;
 	return (num);
 }
@@ -83,4 +88,5 @@ void	init_player_struct(t_data *data)
 			ft_error("malloc error\n", data, 1);
 		get_player_stats(data, data->stats[i], ft_player_lstlast(data->players));
 	}
+	data->players = sort_players(data->players);
 }

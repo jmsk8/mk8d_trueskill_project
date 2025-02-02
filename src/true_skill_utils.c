@@ -22,7 +22,7 @@ char	**read_result(t_data *data)
 	return (map);
 }
 
-static void	ensure_directory_exists(const char *dir)
+void	ensure_directory_exists(const char *dir)
 {
 	struct stat st = {0};
 	if (stat(dir, &st) == -1)

@@ -6,7 +6,6 @@ void	display_players_stats(t_player *player, int num_of_player)
 	int quartiles = 4;
 	int i = 1;
 
-	player = sort_players(player);
 	printf("\n%-20s%-20s%-20s%-20s\n", "Player Name", "Mu", "Sigma", "Points");
 	printf("--------------------------------------------------------------------------\n");
 	while (player)

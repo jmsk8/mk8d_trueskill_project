@@ -6,7 +6,7 @@
 /*   By: jmiccio <jmiccio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:37:35 by jmiccio           #+#    #+#             */
-/*   Updated: 2025/02/02 16:07:58 by jmiccio          ###   ########.fr       */
+/*   Updated: 2025/02/02 17:37:59 by jmiccio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ void	display_competing_players(t_player *player);
 void	display_players_stats(t_player *player, int num_of_player);
 void	display_player_stats(t_player *player, char *name);
 void	display_competing_players_result(t_player *player);
+void	ensure_directory_exists(const char *dir);
 
 
 #endif

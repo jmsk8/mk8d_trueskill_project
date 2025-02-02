@@ -1,8 +1,33 @@
 #include "../includes/mk8d_trueskill.h"
 
+void save_data_file(char **data)
+{
+	time_t rawtime;
+	struct tm *timeinfo;
+	char filename[128];
+	int	i = 0;
+
+	ensure_directory_exists("data/old");
+	time(&rawtime);
+	timeinfo = localtime(&rawtime);
+	strftime(filename, sizeof(filename), "data/old/%Y%m%d_%H%M%S.log", timeinfo);
+	FILE *file = fopen(filename, "w");
+	if (file == NULL)
+	{
+		perror("Error opening file");
+		return;
+	}
+	while (data[i])
+	{
+		fprintf(file, "%s\n", data[i]);
+		i++;
+	}
+	fclose(file);
+}
+
 void save_file(t_data *data)
 {
-	save_old_file(data->players);
+	save_data_file(data->stats);
 	save_new_data(data->players);
 }
 
@@ -62,9 +87,9 @@ int	is_valid_cmd(char **cmd)
 			printf("add: too many argument. Exemple: [add -player]\n");
 			return (0);
 		}
-		if (!ft_strncmp(cmd[2], "-player", MAX_LENGTH))
+		if (!ft_strncmp(cmd[1], "-player", MAX_LENGTH))
 			return (1);
-		else
+		if (ft_strncmp(cmd[1], "-player", MAX_LENGTH))
 		{
 			printf("add: bad argument. Exemple: [add -player]\n");
 			return (0);
@@ -82,7 +107,7 @@ int	is_valid_cmd(char **cmd)
 			printf("delete: too many argument. Exemple: [delete -player]\n");
 			return (0);
 		}
-		else
+		if (cmd[1] && ft_strlen(cmd[1]) > 1)
 			return (1);
 	}
 	if (!ft_strncmp("start", cmd[0], MAX_LENGTH))
@@ -149,6 +174,7 @@ void	add_player(t_data *data)
 	free(mu);
 	free(sigma);
 	ft_player_lstadd_back(&data->players, player);
+	data->players = sort_players(data->players);
 }
 
 void	delete_player(t_data *data, char *name)
@@ -195,6 +221,7 @@ void	delete_player(t_data *data, char *name)
 	}
 	else
 		printf("player not found\n");
+	data->players = sort_players(data->players);
 }
 
 void	exec_cmd(t_data *data, char **cmd)
@@ -212,13 +239,12 @@ void	exec_cmd(t_data *data, char **cmd)
 	}
 	else if (!ft_strncmp("add", cmd[0], MAX_LENGTH))
 	{
-		if (!ft_strncmp("-player", cmd[0], MAX_LENGTH))
+		if (!ft_strncmp("-player", cmd[1], MAX_LENGTH))
 			add_player(data);
 	}
 	else if (!ft_strncmp("delete", cmd[0], MAX_LENGTH))
 	{
-		if (!ft_strncmp("-player", cmd[0], MAX_LENGTH))
-			delete_player(data, cmd[1]);
+		delete_player(data, cmd[1]);
 	}
 	else if (!ft_strncmp("start", cmd[0], MAX_LENGTH))
 	{
@@ -252,7 +278,7 @@ void	exec_cmd(t_data *data, char **cmd)
 		}
 	}
 	else if (!ft_strncmp("save", cmd[0], MAX_LENGTH))
-		delete_player(data, cmd[1]);
+		save_file(data);
 	return ;
 }
 

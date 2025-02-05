@@ -78,14 +78,17 @@ void prepare_tournament(t_data *data)
 	char		*prompt;
 	int			gap = 0;
 
-
-	printf("put the Player in the right order. 1er 2e 3e..., put ENTER to get the next position\n Enter DONE when its done\n");
-	printf("--------------------------------------------\n");
 	while (1)
 	{
+		printf("\033[2J\033[H");
+		display_players_stats(data->players, data->num_of_player);
+		display_competing_players(player);
+		printf("Put the players in the correct order: 1st, 2nd, 3rd... Press ENTER to move to the next position.\nType DONE when finished.\n");
+		printf("--------------------------------------------\n");
 		input = get_input2("1er: ");
 		if (!input)
 			return ;
+		add_history(input);
 		tmp = get_player(data->players, NULL, input);
 		if (tmp)
 			break ;
@@ -95,7 +98,11 @@ void prepare_tournament(t_data *data)
 	input = NULL;
 	while (1)
 	{
-		printf("gap %d, i %d\n", gap, i);
+		printf("\033[2J\033[H");
+		display_players_stats(data->players, data->num_of_player);
+		display_competing_players(player);
+		printf("Put the players in the correct order: 1st, 2nd, 3rd... Press ENTER to move to the next position.\nType DONE when finished.\n");
+		printf("--------------------------------------------\n");
 		prompt = genere_prompt(i + 1);
 		input = get_input2(prompt);
 		if (!input)

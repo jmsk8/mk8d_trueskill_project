@@ -14,7 +14,6 @@ int	cmd_size(char *input)
 		while (*input && isspace(*input))
 			input++;
 	}
-	printf("size %d\n", size);
 	return (size);
 }
 
@@ -78,7 +77,7 @@ int	parsing(t_data *data)
 		ft_error("malloc error\n", data, 1);
 	if (!fill_cmd(data))
 		ft_error("malloc error\n", data, 1);
-	for (int i = 0; data->cmd[i]; i++)
-		printf("cmd [%s] \n", data->cmd[i]);
+	//for (int i = 0; data->cmd[i]; i++)
+	//	printf("cmd %d[%s] \n", i, data->cmd[i]);
 	return (1);
 }

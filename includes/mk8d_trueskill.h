@@ -6,7 +6,7 @@
 /*   By: jmiccio <jmiccio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:37:35 by jmiccio           #+#    #+#             */
-/*   Updated: 2025/02/02 17:37:59 by jmiccio          ###   ########.fr       */
+/*   Updated: 2025/02/05 16:42:20 by jmiccio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # include <readline/history.h>
 # include <signal.h>
 # include <sys/wait.h>
+# include <math.h>
 
 # define RESET        "\033[0m"
 # define BLUE         "\033[34m"
@@ -106,7 +107,14 @@ void	display_competing_players(t_player *player);
 void	display_players_stats(t_player *player, int num_of_player);
 void	display_player_stats(t_player *player, char *name);
 void	display_competing_players_result(t_player *player);
+void	display_competing_players_result2(t_player *player, float diff[12]);
 void	ensure_directory_exists(const char *dir);
+int		check_arg(char *str);
+void	add_player(t_data *data);
+void	delete_player(t_data *data, char *name);
+void	save_data_file(char **data);
+void	save_file(t_data *data);
+void	help_cmd();
 
 
 #endif

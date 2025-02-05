@@ -79,7 +79,6 @@ int	get_num_of_player(char **stats)
 void	init_player_struct(t_data *data)
 {
 	data->num_of_player = get_num_of_player(data->stats);
-	printf("nombre de joueur: %d \n", data->num_of_player);
 	data->players = ft_player_lstnew();
 	get_player_stats(data, data->stats[0], ft_player_lstlast(data->players));
 	for (int i = 1; i < data->num_of_player; i++)

@@ -99,14 +99,7 @@ void save_new_data(t_player *players)
 void	refresh_player_struct(t_player *player, t_player *player_tour)
 {
 	t_player	*head = player;
-	t_player	*check = player_tour;
 
-	while (check)
-	{
-		printf("[check [%s]\n", check->name);
-		check = check->next;
-	}
-	
 	while (player_tour)
 	{
 		player = head;

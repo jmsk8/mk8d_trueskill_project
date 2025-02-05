@@ -6,7 +6,7 @@
 #    By: jmiccio <jmiccio@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/10 17:16:04 by jmiccio           #+#    #+#              #
-#    Updated: 2025/01/31 00:19:21 by jmiccio          ###   ########.fr        #
+#    Updated: 2025/02/05 16:01:43 by jmiccio          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ C_FILES =	main.c \
 			true_skill.c \
 			true_skill_utils.c \
 			prepare_tournament.c \
-			display.c
+			display.c \
+			commands.c
 
 SRC = $(addprefix $(SRC_DIR), $(C_FILES))
 OBJ = $(SRC:.c=.o)

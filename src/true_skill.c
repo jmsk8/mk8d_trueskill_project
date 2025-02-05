@@ -1,6 +1,6 @@
 #include "../includes/mk8d_trueskill.h"
 
-void	save_data(t_data *data)
+void	manage_data(t_data *data)
 {
 	char	*input = NULL;
 	printf("save the result ?(y,n)\n");
@@ -90,7 +90,7 @@ void	trueskill_generator(t_data *data)
 	get_diff_points(scors, data->tournament_players);
 	printf("new:\n");
 	display_competing_players_result2(data->tournament_players, scors);
-	save_data(data);
+	manage_data(data);
 	remove("data/tmp_data.log");
 	return ;
 }

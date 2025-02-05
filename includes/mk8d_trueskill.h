@@ -6,7 +6,7 @@
 /*   By: jmiccio <jmiccio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:37:35 by jmiccio           #+#    #+#             */
-/*   Updated: 2025/02/05 16:42:20 by jmiccio          ###   ########.fr       */
+/*   Updated: 2025/02/05 17:03:37 by jmiccio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,48 +73,58 @@ typedef struct t_data
 
 }				t_data;
 
+/*initialization*/
 void		set_data(t_data *data);
-void		ft_error(char *str, t_data *data, int exit_code);
-void		*ft_free_array(char **map);
-char		**read_stats(t_data *data);
-void		end(t_data *data, int exit_code);
 void		ft_player_lstclear(t_player **lst);
 int			ft_player_lstadd_back(t_player **lst, t_player *new);
-t_player	*ft_player_lstnew(void);
+char		**read_stats(t_data *data);
 void		init_player_struct(t_data *data);
+void		signals(void);
+
+
+/*lst_utils*/
+t_player	*ft_player_lstnew_stats(char *name, float mu, float sigma);
+t_player	*ft_player_lstnew(void);
 t_player	*ft_player_lstlast(t_player *lst);
-int			line_is_empty(char *str);
+t_player	*sort_players(t_player *player);
+
+/*parsing*/
 int			parsing(t_data *data);
+int			line_is_empty(char *str);
+int			get_num_of_player(char **stats);
+void		get_player_stats(t_data *data, char*stats, t_player *player);
+int			check_arg(char *str);
+char		*get_stats_array(int fd, int *is_error);
+
+/*commands*/
+void		trueskill_generator(t_data *data);
+void		help_cmd();
+void		save_file(t_data *data);
+void		add_player(t_data *data);
+void		delete_player(t_data *data, char *name);
+void		prepare_tournament(t_data *data);
+void		display_players_stats(t_player *player, int num_of_player);
+void		display_player_stats(t_player *player, char *name);
+
+/*utils*/
+void		ft_error(char *str, t_data *data, int exit_code);
+void		*ft_free_array(char **map);
+void		end(t_data *data, int exit_code);
 int			exec(t_data *data);
 void		free_tmp_var(t_data *data);
-void		signals(void);
 float		string_to_float(const char *str);
-t_player	*ft_player_lstnew_stats(char *name, float mu, float sigma);
-void		trueskill_generator(t_data *data);
-char		*get_stats_array(int fd, int *is_error);
-void		get_player_stats(t_data *data, char*stats, t_player *player);
-int			get_num_of_player(char **stats);
 char		*get_input(char *str);
-t_player	*sort_players(t_player *player);
-char	**read_result(t_data *data);
-void	save_tmp_data(t_player *players);
-void	save_old_file(t_player *players);
-void	save_new_data(t_player *players);
-void	refresh_player_struct(t_player *player, t_player *player_tour);
-void	refresh_tournament_player_struct(t_data *data);
-void	prepare_tournament(t_data *data);
-void	display_competing_players(t_player *player);
-void	display_players_stats(t_player *player, int num_of_player);
-void	display_player_stats(t_player *player, char *name);
-void	display_competing_players_result(t_player *player);
-void	display_competing_players_result2(t_player *player, float diff[12]);
-void	ensure_directory_exists(const char *dir);
-int		check_arg(char *str);
-void	add_player(t_data *data);
-void	delete_player(t_data *data, char *name);
-void	save_data_file(char **data);
-void	save_file(t_data *data);
-void	help_cmd();
+char		**read_result(t_data *data);
+void		save_tmp_data(t_player *players);
+void		save_old_file(t_player *players);
+void		save_new_data(t_player *players);
+void		refresh_player_struct(t_player *player, t_player *player_tour);
+void		refresh_tournament_player_struct(t_data *data);
+void		display_competing_players(t_player *player);
+void		display_competing_players_result(t_player *player);
+void		display_competing_players_result2(t_player *player, float diff[12]);
+void		ensure_directory_exists(const char *dir);
+void		save_data_file(char **data);;
 
 
 #endif

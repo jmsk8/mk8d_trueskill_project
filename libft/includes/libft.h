@@ -6,7 +6,7 @@
 /*   By: jmiccio <jmiccio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 02:12:39 by arthur            #+#    #+#             */
-/*   Updated: 2025/01/28 23:59:41 by jmiccio          ###   ########.fr       */
+/*   Updated: 2025/02/05 23:00:28 by jmiccio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <limits.h>
 # include <string.h>
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 100
+#  define BUFFER_SIZE 1
 # endif
 
 char	**ft_split(char *s, char c);
@@ -48,10 +48,6 @@ char	*ft_strchr(char const *str, int c);
 int		ft_strncmp(char const *s1, char const *s2, size_t n);
 
 /*get_next_line*/
-
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
-# endif
 
 char	*get_next_line(int fd, int *is_error);
 char	*ft_copy_to_stash(char *stash, char *buf, size_t *size);

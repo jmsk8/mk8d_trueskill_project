@@ -50,7 +50,7 @@ void save_tmp_data(t_player *players)
 	fclose(file);
 }
 
-void save_old_file(t_player *players)
+void save_old_file(void)
 {
 	time_t rawtime;
 	struct tm *timeinfo;
@@ -60,18 +60,28 @@ void save_old_file(t_player *players)
 	time(&rawtime);
 	timeinfo = localtime(&rawtime);
 	strftime(filename, sizeof(filename), "data/old/%Y%m%d_%H%M%S.log", timeinfo);
+
 	FILE *file = fopen(filename, "w");
 	if (file == NULL)
 	{
 		perror("Error opening file");
 		return;
 	}
-	t_player *player = players;
-	while (player != NULL)
+
+	FILE *source = fopen("data/data.log", "r");
+	if (source != NULL)
 	{
-		fprintf(file, "%s = mu=%.3f, sigma=%.3f\n", player->name, player->mu, player->sigma);
-		player = player->next;
+		char buffer[1024];
+		size_t bytesRead;
+		while ((bytesRead = fread(buffer, 1, sizeof(buffer), source)) > 0)
+			fwrite(buffer, 1, bytesRead, file);
+		fclose(source);
 	}
+	else
+	{
+		perror("Error opening source file (data/data.log)");
+	}
+
 	fclose(file);
 }
 

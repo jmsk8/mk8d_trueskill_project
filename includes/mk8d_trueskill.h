@@ -6,7 +6,7 @@
 /*   By: jmiccio <jmiccio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:37:35 by jmiccio           #+#    #+#             */
-/*   Updated: 2025/02/05 17:03:37 by jmiccio          ###   ########.fr       */
+/*   Updated: 2025/02/06 12:06:23 by jmiccio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ float		string_to_float(const char *str);
 char		*get_input(char *str);
 char		**read_result(t_data *data);
 void		save_tmp_data(t_player *players);
-void		save_old_file(t_player *players);
+void		save_old_file(void);
 void		save_new_data(t_player *players);
 void		refresh_player_struct(t_player *player, t_player *player_tour);
 void		refresh_tournament_player_struct(t_data *data);

@@ -107,6 +107,7 @@ void prepare_tournament(t_data *data)
 		input = get_input2(prompt);
 		if (!input)
 		{
+			free(prompt);
 			ft_player_lstclear(&player);
 			return ;
 		}

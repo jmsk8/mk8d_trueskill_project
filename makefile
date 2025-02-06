@@ -6,11 +6,11 @@
 #    By: jmiccio <jmiccio@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/10 17:16:04 by jmiccio           #+#    #+#              #
-#    Updated: 2025/02/05 16:01:43 by jmiccio          ###   ########.fr        #
+#    Updated: 2025/02/05 20:07:58 by jmiccio          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = mk8d_trueskill
+NAME = Mk8d_TrueSkill
 
 SRC_DIR = ./src/
 

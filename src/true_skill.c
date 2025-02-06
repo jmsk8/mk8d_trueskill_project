@@ -5,8 +5,10 @@ void	manage_data(t_data *data)
 	char	*input = NULL;
 	printf("save the result ?(y,n)\n");
 	input = get_input("> ");
-	if (input || !ft_strncmp("n", input, MAX_LENGTH))
+	if (!input || !ft_strncmp("n", input, MAX_LENGTH))
 	{
+		if (input)
+			free(input);
 		printf("\033[2J\033[H");
 		printf("suppressing...\n");
 		usleep(1000000);
@@ -14,9 +16,10 @@ void	manage_data(t_data *data)
 	}
 	else if (!ft_strncmp("y", input, MAX_LENGTH))
 	{
+		free(input);
 		printf("\033[2J\033[H");
 		printf("saving...\n");
-		save_old_file(data->players);
+		save_old_file();
 		refresh_player_struct(data->players, data->tournament_players);
 		save_new_data(data->players);
 		usleep(1000000);

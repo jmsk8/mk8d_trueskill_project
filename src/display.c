@@ -1,32 +1,42 @@
 #include "../includes/mk8d_trueskill.h"
 
+static double calculate_quartile(double *points, int count, double position)
+{
+	int index = (int)position;
+	double fraction = position - index;
+
+	if (index >= count - 1)
+		return points[count - 1];
+	return points[index] + fraction * (points[index + 1] - points[index]);
+}
+
 void quartile_generator(t_player *player, double *q1, double *q2, double *q3, int count)
 {
-	int q1_idx, q2_idx, q3_idx;
+	if (count < 2)
+		return;
+
+	double *points = (double *)malloc(count * sizeof(double));
+	if (!points)
+		return;
+
 	t_player *tmp = player;
-	int	pair = 0;
-
-	if (count % 2 != 0)
-		pair = 1;
-	q3_idx = (count + pair) / 4;
-	q2_idx = (count + pair) / 2;
-	q1_idx = 3 * (count + pair) / 4;
-
 	for (int i = 0; i < count; i++)
 	{
-		double points = tmp->mu - (3 * tmp->sigma);
-
-		if (i == q3_idx)
-			*q3 = points;
-		if (i == q2_idx)
-			*q2 = points;
-		if (i == q1_idx)
-			*q1 = points;
-
+		points[i] = tmp->mu - (3 * tmp->sigma);
 		tmp = tmp->next;
 	}
 
-	 printf("Quartiles : Q1 = %.3f, Q2 = %.3f, Q3 = %.3f\n", *q1, *q2, *q3);
+	double pos_q3 = 0.25 * (count + 1) - 1;
+	double pos_q2 = 0.50 * (count + 1) - 1;
+	double pos_q1 = 0.75 * (count + 1) - 1;
+
+	*q3 = calculate_quartile(points, count, pos_q3);
+	*q2 = calculate_quartile(points, count, pos_q2);
+	*q1 = calculate_quartile(points, count, pos_q1);
+
+	printf("Quartiles : Q1 = %.3f, Q2 = %.3f, Q3 = %.3f\n", *q1, *q2, *q3);
+
+	free(points);
 }
 
 void display_players_stats(t_player *player, int num_of_players)

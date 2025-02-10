@@ -6,7 +6,7 @@
 /*   By: jmiccio <jmiccio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:59:04 by jmiccio           #+#    #+#             */
-/*   Updated: 2025/02/05 16:00:27 by jmiccio          ###   ########.fr       */
+/*   Updated: 2025/02/08 15:50:39 by jmiccio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	add_player(t_data *data)
 		if (tmp)
 		{
 			printf("player already exist\n");
-			free(player);
+			free(player->name);
 		}
 		else
 			break ;
@@ -92,54 +92,37 @@ void	add_player(t_data *data)
 	free(mu);
 	free(sigma);
 	ft_player_lstadd_back(&data->players, player);
+	data->num_of_player++;
 	data->players = sort_players(data->players);
 }
 
-void	delete_player(t_data *data, char *name)
+void delete_player(t_data *data, char *name)
 {
-	t_player	*player = data->players;
-	t_player	*next_tmp = NULL;
-	t_player	*prev_tmp = NULL;
+	t_player *player = data->players;
+	t_player *prev_player = NULL;
 
 	while (player)
 	{
 		if (!strncmp(name, player->name, MAX_LENGTH))
-			break ;
+			break;
+		prev_player = player;
 		player = player->next;
 	}
 
 	if (player)
 	{
 		free(player->name);
-		player->name = NULL;
-		if (!player->prev)
-		{
-			next_tmp = player->next;
-			free(player);
-			data->players = next_tmp;
-			data->players->prev = NULL;
-			return ;
-		}
-		else if (!player->next)
-		{
-			prev_tmp = player->prev;
-			free(player);
-			prev_tmp->next = NULL;
-			return ;
-		}
+		if (prev_player)
+			prev_player->next = player->next;
 		else
-		{
-			prev_tmp = player->prev;
-			next_tmp = player->next;
-			free(player);
-			prev_tmp->next = next_tmp;
-			next_tmp->prev = prev_tmp;
-		}
-		return ;
+			data->players = player->next;
+		free(player);
+		data->num_of_player--;
 	}
 	else
+	{
 		printf("player not found\n");
-	data->players = sort_players(data->players);
+	}
 }
 
 void save_data_file(char **data)

@@ -6,7 +6,7 @@
 /*   By: jmiccio <jmiccio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:37:35 by jmiccio           #+#    #+#             */
-/*   Updated: 2025/02/06 12:06:23 by jmiccio          ###   ########.fr       */
+/*   Updated: 2025/02/10 17:45:04 by jmiccio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ typedef struct t_player
 	double			sigma;
 	int				pos;
 	struct t_player	*next;
-	struct t_player	*prev;
 	
 }				t_player;
 

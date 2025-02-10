@@ -1,39 +1,65 @@
 #include "../includes/mk8d_trueskill.h"
 
-void	display_players_stats(t_player *player, int num_of_player)
+void quartile_generator(t_player *player, double *q1, double *q2, double *q3, int count)
 {
-	double gap = (double)num_of_player / 4.0;
-	int quartiles = 4;
-	int i = 1;
+	int q1_idx, q2_idx, q3_idx;
+	t_player *tmp = player;
+	int	pair = 0;
+
+	if (count % 2 != 0)
+		pair = 1;
+	q3_idx = (count + pair) / 4;
+	q2_idx = (count + pair) / 2;
+	q1_idx = 3 * (count + pair) / 4;
+
+	for (int i = 0; i < count; i++)
+	{
+		double points = tmp->mu - (3 * tmp->sigma);
+
+		if (i == q3_idx)
+			*q3 = points;
+		if (i == q2_idx)
+			*q2 = points;
+		if (i == q1_idx)
+			*q1 = points;
+
+		tmp = tmp->next;
+	}
+
+	 printf("Quartiles : Q1 = %.3f, Q2 = %.3f, Q3 = %.3f\n", *q1, *q2, *q3);
+}
+
+void display_players_stats(t_player *player, int num_of_players)
+{
+	double pos_q1 = 0;
+	double pos_q2 = 0;
+	double pos_q3 = 0;
+
+	quartile_generator(player, &pos_q1, &pos_q2, &pos_q3, num_of_players);
 
 	printf("\n%-20s%-20s%-20s%-20s\n", "Player Name", "Mu", "Sigma", "Points");
 	printf("--------------------------------------------------------------------------\n");
+
 	while (player)
 	{
 		double points = player->mu - (3 * player->sigma);
+
 		printf(BOLD_RED "%-20s" RESET, player->name);
 		printf(BOLD_BLUE "%-20.3f" RESET, player->mu);
 		printf(BOLD_GREEN "%-20.3f" RESET, player->sigma);
-		if (quartiles == 4)
+
+		if (points > pos_q3)
 			printf(RANK_S "%-20.3f\n" RESET, points);
-		else if (quartiles == 3)
+		else if (points > pos_q2)
 			printf(RANK_A "%-20.3f\n" RESET, points);
-		else if (quartiles == 2)
+		else if (points > pos_q1)
 			printf(RANK_B "%-20.3f\n" RESET, points);
-		else if (quartiles == 1)
-			printf(RANK_C "%-20.3f\n" RESET, points);
 		else
 			printf(RANK_C "%-20.3f\n" RESET, points);
 
 		player = player->next;
-		if (i >= (int)gap)
-		{
-			quartiles--;
-			i = 1;
-		}
-		else
-			i++;
 	}
+
 	printf("--------------------------------------------------------------------------\n");
 }
 

@@ -6,7 +6,7 @@
 /*   By: jmiccio <jmiccio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:37:35 by jmiccio           #+#    #+#             */
-/*   Updated: 2025/02/10 17:45:04 by jmiccio          ###   ########.fr       */
+/*   Updated: 2025/02/12 21:56:39 by jmiccio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void		save_file(t_data *data);
 void		add_player(t_data *data);
 void		delete_player(t_data *data, char *name);
 void		prepare_tournament(t_data *data);
-void		display_players_stats(t_player *player, int num_of_player);
+void		display_players_stats(t_player *player);
 void		display_player_stats(t_player *player, char *name);
 
 /*utils*/

@@ -109,7 +109,7 @@ void	exec_cmd(t_data *data, char **cmd)
 	else if (!ft_strncmp("show", cmd[0], MAX_LENGTH))
 	{
 		if (cmd[1] && !cmd[2] && !ft_strncmp("-stats", cmd[1], MAX_LENGTH))
-			display_players_stats(data->players, data->num_of_player);
+			display_players_stats(data->players);
 		else if (!ft_strncmp("-stats", cmd[1], MAX_LENGTH) && cmd[2])
 			display_player_stats(data->players, cmd[2]);
 	}
@@ -149,7 +149,7 @@ void	exec_cmd(t_data *data, char **cmd)
 				printf("Proceeding...\n");
 				trueskill_generator(data);
 				printf("New:\n");
-				display_players_stats(data->players, data->num_of_player);
+				display_players_stats(data->players);
 				break ;
 			}
 			else
@@ -159,7 +159,7 @@ void	exec_cmd(t_data *data, char **cmd)
 	}
 	else if (!ft_strncmp("save", cmd[0], MAX_LENGTH))
 	{
-		display_players_stats(data->players, data->num_of_player);
+		display_players_stats(data->players);
 		while (1)
 		{
 			input = get_input("save this stats?(y,n)");

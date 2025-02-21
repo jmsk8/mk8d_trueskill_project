@@ -6,7 +6,7 @@
 #    By: jmiccio <jmiccio@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/10 17:16:04 by jmiccio           #+#    #+#              #
-#    Updated: 2025/02/12 20:11:26 by jmiccio          ###   ########.fr        #
+#    Updated: 2025/02/21 10:31:49 by jmiccio          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,8 +33,10 @@ SRC = $(addprefix $(SRC_DIR), $(C_FILES))
 OBJ = $(SRC:.c=.o)
 
 INCLUDE = -I includes
-LIBFT = libft/libft.a 
-CFLAGS = -Wall -Werror -Wextra $(INCLUDE) -L -lft -I/usr/include/readline
+LIBFT = libft/libft.a
+CFLAGS = -Wall -Werror -Wextra $(INCLUDE) -I/usr/include/readline
+
+
 
 LDFLAGS = -lreadline -lncurses -lm
 
@@ -46,7 +48,7 @@ $(NAME): $(OBJ)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
-	
+
 clean:
 	@make clean -C libft
 	rm -f $(OBJ)

@@ -63,19 +63,45 @@ void get_diff_points(float scors[12], t_player *player)
 	}
 }
 
-void	trueskill_generator(t_data *data)
+void install_python(void)
 {
-	pid_t	pid;
-	char	*python = "/usr/bin/python3";
-	char	*script = "Trueskill.py";
-	char	*args[] = {python, script, NULL};
-	char	*envp[] = {NULL};
-	float	scors[12];
+	pid_t pid;
 
+	pid = fork();
+	if (pid == -1)
+	{
+		perror("fork error");
+		exit(1);
+	}
+
+	if (pid == 0)
+	{
+		char	*install_script = "./Py_installer.sh";
+		execlp(install_script, install_script, NULL);
+		perror("execlp failed");
+		exit(1);
+	}
+	wait(NULL);
+}
+
+void trueskill_generator(t_data *data)
+{
+	pid_t pid;
+	char *python = "./Python/bin/python3";
+	char *script = "Trueskill.py";
+	char *args[] = {python, script, NULL};
+	char *envp[] = {NULL};
+	float scors[12];
+	if (access(python, F_OK) == -1)
+	{
+		printf("Python local non trouvé. Installation en cours...\n");
+		install_python();
+	}
 	save_tmp_data(data->tournament_players);
 	pid = fork();
 	if (pid == -1)
 		ft_error("fork error\n", data, 1);
+
 	if (!pid)
 	{
 		execve(python, args, envp);
@@ -95,5 +121,5 @@ void	trueskill_generator(t_data *data)
 	display_competing_players_result2(data->tournament_players, scors);
 	manage_data(data);
 	remove("data/tmp_data.log");
-	return ;
+	return;
 }

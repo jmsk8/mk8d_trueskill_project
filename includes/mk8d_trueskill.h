@@ -6,7 +6,7 @@
 /*   By: jmiccio <jmiccio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 11:37:35 by jmiccio           #+#    #+#             */
-/*   Updated: 2025/02/12 21:56:39 by jmiccio          ###   ########.fr       */
+/*   Updated: 2025/05/09 18:03:47 by jmiccio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include <string.h>
 # include <unistd.h>
 # include <stdio.h>
-# include <string.h>
 # include <X11/keysym.h>
 # include <X11/X.h>
 # include <fcntl.h>
@@ -31,6 +30,7 @@
 # include <signal.h>
 # include <sys/wait.h>
 # include <math.h>
+# include <sys/types.h>
 
 # define RESET        "\033[0m"
 # define BLUE         "\033[34m"
@@ -64,6 +64,7 @@ typedef struct t_data
 {
 	t_player	*players;
 	t_player	*tournament_players;
+	char	*date;
 	char	**stats;
 	char	**resul_stats;
 	char	**cmd;
@@ -102,7 +103,7 @@ void		save_file(t_data *data);
 void		add_player(t_data *data);
 void		delete_player(t_data *data, char *name);
 void		prepare_tournament(t_data *data);
-void		display_players_stats(t_player *player);
+void		display_players_stats(t_player *player, char *data);
 void		display_player_stats(t_player *player, char *name);
 
 /*utils*/
@@ -116,7 +117,7 @@ char		*get_input(char *str);
 char		**read_result(t_data *data);
 void		save_tmp_data(t_player *players);
 void		save_old_file(void);
-void		save_new_data(t_player *players);
+void		save_new_data(t_player *players, char *date);
 void		refresh_player_struct(t_player *player, t_player *player_tour);
 void		refresh_tournament_player_struct(t_data *data);
 void		display_competing_players(t_player *player);

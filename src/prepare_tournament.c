@@ -81,7 +81,7 @@ void prepare_tournament(t_data *data)
 	while (1)
 	{
 		printf("\033[2J\033[H");
-		display_players_stats(data->players);
+		display_players_stats(data->players, data->date);
 		display_competing_players(player);
 		printf("Put the players in the correct order: 1st, 2nd, 3rd... Press ENTER to move to the next position.\nType DONE when finished.\n");
 		printf("--------------------------------------------\n");
@@ -99,7 +99,7 @@ void prepare_tournament(t_data *data)
 	while (1)
 	{
 		printf("\033[2J\033[H");
-		display_players_stats(data->players);
+		display_players_stats(data->players, data->date);
 		display_competing_players(player);
 		printf("Put the players in the correct order: 1st, 2nd, 3rd... Press ENTER to move to the next position.\nType DONE when finished.\n");
 		printf("--------------------------------------------\n");

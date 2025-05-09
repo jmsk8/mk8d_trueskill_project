@@ -6,7 +6,7 @@
 /*   By: jmiccio <jmiccio@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:59:04 by jmiccio           #+#    #+#             */
-/*   Updated: 2025/02/08 15:50:39 by jmiccio          ###   ########.fr       */
+/*   Updated: 2025/05/09 18:03:58 by jmiccio          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ void save_data_file(char **data)
 void save_file(t_data *data)
 {
 	save_data_file(data->stats);
-	save_new_data(data->players);
+	save_new_data(data->players, data->date);
 }
 
 void help_cmd()

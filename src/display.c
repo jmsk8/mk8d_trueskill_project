@@ -90,13 +90,14 @@ t_player	*sort_player(t_player *player)
 	return (tmp);
 }
 
-void display_players_stats(t_player *player)
+void display_players_stats(t_player *player, char *date)
 {
 	double		mu = 0;
 	double		sigma = 0;
 	t_player	*tmp_player = sort_player(player);
-	ecart_type_generator(tmp_player, &mu, &sigma);
 
+	printf("date: %s\n", date);
+	ecart_type_generator(tmp_player, &mu, &sigma);
 	printf("\n%-20s%-20s%-20s%-20s\n", "Player Name", "Mu", "Sigma", "Points");
 	printf("--------------------------------------------------------------------------\n");
 

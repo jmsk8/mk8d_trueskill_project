@@ -29,20 +29,20 @@ char	**read_stats(t_data *data)
 {
 	int		fd;
 	int		is_error;
-	char	**map;
+	char	**file;
 
-	map = NULL;
+	file = NULL;
 	is_error = 0;
 
 	fd = open("data/data.log", O_RDONLY);
 	if (fd > 0 && BUFFER_SIZE > 0)
 	{
-		map = ft_split(get_stats_array(fd, &is_error), '\n');
+		file = ft_split(get_stats_array(fd, &is_error), '\n');
 		close(fd);
-		if (!map)
+		if (!file)
 			ft_error("Memory error\n", data, 1);
 	}
 	else
 		ft_error("Error\nFailed to open file\n", data, 1);
-	return (map);
+	return (file);
 }

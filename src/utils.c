@@ -57,6 +57,8 @@ int	line_is_empty(char *str)
 
 void	end(t_data *data, int exit_code)
 {
+	if (data->date)
+		free(data->date);
 	if (data->stats)
 		ft_free_array(data->stats);
 	if (data->resul_stats)

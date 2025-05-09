@@ -71,17 +71,18 @@ void get_player_stats(t_data *data, char*stats, t_player *player)
 int	get_num_of_player(char **stats)
 {
 	int	num = 0;
-	while(stats[num] && ft_strlen(stats[num]) > 16)
+	while(stats[num + 1] && ft_strlen(stats[num + 1]) > 16)
 		num++;
 	return (num);
 }
 
 void	init_player_struct(t_data *data)
 {
+	data->date = ft_strdup(data->stats[0]);
 	data->num_of_player = get_num_of_player(data->stats);
 	data->players = ft_player_lstnew();
-	get_player_stats(data, data->stats[0], ft_player_lstlast(data->players));
-	for (int i = 1; i < data->num_of_player; i++)
+	get_player_stats(data, data->stats[1], ft_player_lstlast(data->players));
+	for (int i = 2; i < data->num_of_player; i++)
 	{
 		if (!ft_player_lstadd_back(&data->players, ft_player_lstnew()))
 			ft_error("malloc error\n", data, 1);

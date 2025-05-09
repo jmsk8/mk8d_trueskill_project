@@ -3,6 +3,7 @@
 void	set_data(t_data *data)
 {
 	data->stats = NULL;
+	data->date = NULL;
 	data->players = NULL;
 	data->cmd = NULL;
 	data->input = NULL;

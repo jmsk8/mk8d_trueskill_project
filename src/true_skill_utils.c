@@ -85,7 +85,7 @@ void save_old_file(void)
 	fclose(file);
 }
 
-void save_new_data(t_player *players)
+void save_new_data(t_player *players, char *date)
 {
 	ensure_directory_exists("data");
 	players =  sort_players(players);
@@ -96,6 +96,7 @@ void save_new_data(t_player *players)
 		return;
 	}
 
+	fprintf(file, "%s\n", date);
 	t_player *player = players;
 	while (player)
 	{
@@ -128,11 +129,19 @@ void	refresh_player_struct(t_player *player, t_player *player_tour)
 }
 
 
+static int get_num_of_player2(char **stats)
+{
+	int	num = 0;
+	while(stats[num] && ft_strlen(stats[num]) > 16)
+		num++;
+	return (num);
+}
+
 void	refresh_tournament_player_struct(t_data *data)
 {
 	ft_player_lstclear(&data->tournament_players);
 	data->tournament_players = NULL;
-	int num_of_player = get_num_of_player(data->resul_stats);
+	int num_of_player = get_num_of_player2(data->resul_stats);
 	data->tournament_players = ft_player_lstnew();
 	if (!data->tournament_players)
 		ft_error("malloc error\n", data, 1);

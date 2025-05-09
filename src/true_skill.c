@@ -3,25 +3,33 @@
 void	manage_data(t_data *data)
 {
 	char	*input = NULL;
-	printf("save the result ?(y,n)\n");
+	printf("Do you want to save the result? (y/n)\n");
 	input = get_input("> ");
 	if (!input || !ft_strncmp("n", input, MAX_LENGTH))
 	{
 		if (input)
 			free(input);
 		printf("\033[2J\033[H");
-		printf("suppressing...\n");
+		printf("Deleting...\n");
 		usleep(1000000);
 		printf("\033[2J\033[H");
 	}
 	else if (!ft_strncmp("y", input, MAX_LENGTH))
 	{
 		free(input);
+		printf("Enter the date of the tournament:\n");
+		input = get_input("> ");
+		if (input)
+		{
+			if (data->date)
+				free(data->date);
+			data->date = ft_strdup(input);
+		}
 		printf("\033[2J\033[H");
 		printf("saving...\n");
 		save_old_file();
 		refresh_player_struct(data->players, data->tournament_players);
-		save_new_data(data->players);
+		save_new_data(data->players, data->date);
 		usleep(1000000);
 		printf("\033[2J\033[H");
 	}

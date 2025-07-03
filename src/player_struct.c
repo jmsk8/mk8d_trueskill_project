@@ -82,7 +82,7 @@ void	init_player_struct(t_data *data)
 	data->num_of_player = get_num_of_player(data->stats);
 	data->players = ft_player_lstnew();
 	get_player_stats(data, data->stats[1], ft_player_lstlast(data->players));
-	for (int i = 2; i < data->num_of_player; i++)
+	for (int i = 2; i != data->num_of_player + 1; i++)
 	{
 		if (!ft_player_lstadd_back(&data->players, ft_player_lstnew()))
 			ft_error("malloc error\n", data, 1);

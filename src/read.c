@@ -38,6 +38,9 @@ char	**read_stats(t_data *data)
 	if (fd > 0 && BUFFER_SIZE > 0)
 	{
 		file = ft_split(get_stats_array(fd, &is_error), '\n');
+		// for (int i = 0; file[i]; i++)
+		// 	printf("%s\n", file[i]);
+		// exit(1);
 		close(fd);
 		if (!file)
 			ft_error("Memory error\n", data, 1);
